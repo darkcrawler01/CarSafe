@@ -12,36 +12,55 @@ angular.module('app')
         }
 
         $scope.reportAlertUser = function(reportType) {
-            var reportText;
+        var reportText;
 
-            switch (reportType) {
-              case "recklessDriver":
-                reportText = "Reckless driver nearby!";
-                break;
-              case "roadHazard":
-                reportText = "Road hazard nearby!";
-                break;
-              case "heavyTraffic":
-                reportText = "Heavy traffic nearby!";
-                break;
-              default:
-                console.log("something went wrong.. report type not found");
-                break;
-            }
+        switch (reportType) {
+          case "recklessDriver":
+            reportText = "Reckless driver nearby!";
+            break;
+          case "roadHazard":
+            reportText = "Road hazard nearby!";
+            break;
+          case "heavyTraffic":
+            reportText = "Heavy traffic nearby!";
+            break;
+          case "slowdown":
+            reportText = "Sudden slowdown in traffic speed.";
+            break;
+          default:
+            console.log("something went wrong.. report type not found");
+            break;
+        }
 
+        if (reportType == "slowdown"){
             $alert.show({
                 type: "danger",
                 showIcon: "true",
                 showConfirmationBtn: "true",
                 buttonText: "Thanks",
+                onClose: $scope.onReportClose(reportType),
                 autoCloseInterval: "false",
                 title: "Attention",
                 text: reportText
             });
-        };
+        } else {
+            $alert.show({
+                type: "info",
+                showIcon: "true",
+                showConfirmationBtn: "false",
+                autoCloseInterval: "3000",
+                title: "Caution",
+                text: reportText
+            });
+        }
+    };
 
-        jQuery(document).on("alertTrigger", function(){
-            $scope.reportAlertUser('recklessDriver');
+        jQuery(document).on("alertTrigger", params, function(){
+            $scope.reportAlertUser(params[0]);
+        });
+
+        jQuery(document).on("speedTrigger", function(){
+            $scope.reportAlertUser('slowdown');
         });
 
 
@@ -91,10 +110,9 @@ angular.module('app')
 
     var tmpInterval = setInterval(function(){
         if (parseInt(globalData.split(":")[2].split("}")[0]) <= 10){
-            alert("CRASH");
+            socket.emit('crash', JSON.stringify({"ID": uniqueID, "data" : "crash"}));
         } else if (parseInt(globalData.split(":")[2].split("}")[0]) <= 25){
-            clearInterval(tmpInterval);
-            moveToSpeedReduction();
+            socket.emit('speed', JSON.stringify({"ID": uniqueID, "data" : "speed"}));
         }
     }, 100);
 

@@ -33,21 +33,35 @@ angular.module('app')
 		  case "heavyTraffic":
 		  	reportText = "Heavy traffic nearby!";
 		    break;
+          case "slowdown":
+            reportText = "Sudden slowdown in traffic speed.";
+            break;
 		  default:
 		  	console.log("something went wrong.. report type not found");
 		    break;
 		}
 
-    	$alert.show({
-            type: "danger",
-            showIcon: "true",
-            showConfirmationBtn: "true",
-            buttonText: "Thanks",
-            onClose: $scope.onReportClose(reportType),
-            autoCloseInterval: "false",
-            title: "Attention",
-            text: reportText
-        });
+        if (reportType == "slowdown"){
+            $alert.show({
+                type: "danger",
+                showIcon: "true",
+                showConfirmationBtn: "true",
+                buttonText: "Thanks",
+                onClose: $scope.onReportClose(reportType),
+                autoCloseInterval: "false",
+                title: "Attention",
+                text: reportText
+            });
+        } else {
+            $alert.show({
+                type: "info",
+                showIcon: "true",
+                showConfirmationBtn: "false",
+                autoCloseInterval: "3000",
+                title: "Caution",
+                text: reportText
+            });
+        }
     };
 
     $scope.getPosition = function(position){
@@ -112,8 +126,12 @@ angular.module('app')
         }
     ];
 
-    jQuery(document).on("alertTrigger", function(){
-        $scope.reportAlertUser('recklessDriver');
+    jQuery(document).on("alertTrigger", params, function(){
+        $scope.reportAlertUser(params[0]);
+    });
+
+    jQuery(document).on("speedTrigger", function(){
+        $scope.reportAlertUser('slowdown');
     });
 
 });

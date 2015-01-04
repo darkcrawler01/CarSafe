@@ -71,13 +71,21 @@ function initDec() {
 
         //decSetSubscriptions();
         socket.on('warning', function(msg){
-        console.error("received" + msg);
-        console.log(msg);
-        msg = JSON.parse(msg);
-        if (uniqueID != msg.ID){
-            jQuery(document).trigger("alertTrigger");
-        }
-      });
+            console.error("received" + msg);
+            console.log(msg);
+            msg = JSON.parse(msg);
+            if (uniqueID != msg.ID){
+                jQuery(document).trigger("alertTrigger", [msg.data]);
+            }
+        });
+        socket.on('speed', function(msg){
+            console.error("received" + msg);
+            console.log(msg);
+            msg = JSON.parse(msg);
+            if (uniqueID != msg.ID){
+                jQuery(document).trigger("speedTrigger");
+            }
+        });
     };
 
     try {

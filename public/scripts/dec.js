@@ -15,14 +15,22 @@ function decSetSubscriptions() {
 
     //drive.navigation.pois.subscribe(decCallback, logError);
 
-    socket.on('warning', function(msg){
-        console.error("received" + msg);
-        console.log(msg);
-        msg = JSON.parse(msg);
-        if (uniqueID != msg.ID){
-            jQuery(document).trigger("alertTrigger");
-        }
-      });
+    // socket.on('warning', function(msg){
+    //     console.error("received" + msg);
+    //     console.log(msg);
+    //     msg = JSON.parse(msg);
+    //     if (uniqueID != msg.ID){
+    //         jQuery(document).trigger("alertTrigger");
+    //     }
+    //   });
+    // socket.on('speed', function(msg){
+    //     console.error("received" + msg);
+    //     console.log(msg);
+    //     msg = JSON.parse(msg);
+    //     if (uniqueID != msg.ID){
+    //         jQuery(document).trigger("speedTrigger");
+    //     }
+    //   });
 }
 
 function decCallback(decResponse) {
