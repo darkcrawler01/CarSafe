@@ -10,6 +10,10 @@ io.on('connection', function(socket){
     io.emit('warning', msg);
     console.error("sent");
   });
+  socket.on('speed', function(msg){
+    io.emit('speed', msg);
+    console.error("speed sent");
+  });
 });
 
 http.listen(8080, function(){

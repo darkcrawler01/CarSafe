@@ -14,31 +14,71 @@ angular.module('app')
         $scope.reportAlertUser = function(reportType) {
         var reportText;
 
+        
         switch (reportType) {
           case "recklessDriver":
             reportText = "Reckless driver nearby!";
+            try
+            {
+                
+            var aud = new Audio('/audio/reckless.wav');
+            aud.play();
+            }
+            catch(e) 
+            {
+                console.error(e);
+            }
             break;
           case "roadHazard":
             reportText = "Road hazard nearby!";
+            try
+            {
+
+            var aud = new Audio('/audio/hazard.wav');
+            aud.play();
+            }
+            catch(e) 
+            {
+                console.error(e);
+            }
             break;
           case "heavyTraffic":
             reportText = "Heavy traffic nearby!";
+            try
+            {
+
+            var aud = new Audio('/audio/heavy.wav');
+            aud.play();
+            }
+            catch(e) 
+            {
+                console.error(e);
+            }
             break;
-          case "slowdown":
+          case "speed":
             reportText = "Sudden slowdown in traffic speed.";
+            try
+            {
+
+            var aud = new Audio('/audio/speed.wav');
+            aud.play();
+            }
+            catch(e) 
+            {
+                console.error(e);
+            }
             break;
           default:
             console.log("something went wrong.. report type not found");
             break;
         }
 
-        if (reportType == "slowdown"){
+        if (reportType != "speed"){
             $alert.show({
                 type: "danger",
                 showIcon: "true",
                 showConfirmationBtn: "true",
                 buttonText: "Thanks",
-                onClose: $scope.onReportClose(reportType),
                 autoCloseInterval: "false",
                 title: "Attention",
                 text: reportText
@@ -55,12 +95,12 @@ angular.module('app')
         }
     };
 
-        jQuery(document).on("alertTrigger", params, function(){
-            $scope.reportAlertUser(params[0]);
+        jQuery(document).on("alertTrigger", function(e, params){
+            $scope.reportAlertUser(params);
         });
 
-        jQuery(document).on("speedTrigger", function(){
-            $scope.reportAlertUser('slowdown');
+        jQuery(document).on("speedTrigger", function(e, params){
+            $scope.reportAlertUser(params);
         });
 
 
@@ -107,13 +147,19 @@ angular.module('app')
         //     if (deregisterFuelWatch) deregisterFuelWatch();
         //     if (deregisterIdentificationWatch) deregisterIdentificationWatch();
         // });
-
+    
     var tmpInterval = setInterval(function(){
-        if (parseInt(globalData.split(":")[2].split("}")[0]) <= 10){
+        
+        if (globalData != null && parseInt(globalData.split(":")[2].split("}")[0]) <= 10){
             socket.emit('crash', JSON.stringify({"ID": uniqueID, "data" : "crash"}));
-        } else if (parseInt(globalData.split(":")[2].split("}")[0]) <= 25){
+            clearInterval(tmpInterval);
+            console.error("crash");
+        } else if (globalData != null && parseInt(globalData.split(":")[2].split("}")[0]) <= 25){
             socket.emit('speed', JSON.stringify({"ID": uniqueID, "data" : "speed"}));
+            clearInterval(tmpInterval);
+            console.error("speed");
         }
+        
     }, 100);
 
 });    

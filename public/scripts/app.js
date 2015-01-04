@@ -79,11 +79,11 @@ function initDec() {
             }
         });
         socket.on('speed', function(msg){
-            console.error("received" + msg);
-            console.log(msg);
+            console.error("speeed &****************" + msg);
+            console.error(msg);
             msg = JSON.parse(msg);
             if (uniqueID != msg.ID){
-                jQuery(document).trigger("speedTrigger");
+                jQuery(document).trigger("speedTrigger", [msg.data]);
             }
         });
     };
