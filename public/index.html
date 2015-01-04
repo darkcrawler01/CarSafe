@@ -18,12 +18,21 @@
     <att-loader></att-loader>
 </body>
 
-<script>
-    //super hacky
-    var globalData;
-</script>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+
+<script>
+
+    //super hacky
+    var globalData;
+    var socket = io();
+    
+    var uniqueID = Math.random();
+
+</script>
+
 
 <!-- DEC API -->
 <script type="text/javascript" src="dec-sdk\scripts\data-event-sdk.json"></script>

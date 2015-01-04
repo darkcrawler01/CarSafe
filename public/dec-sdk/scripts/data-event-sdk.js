@@ -477,7 +477,7 @@ if (typeof Promise === 'undefined') {
 }
 },{"./polyfill-done.js":5,"promise":3}]},{},[6])
 
-var host = "10.10.16.88";
+var host = "127.0.0.1";
 var port = "4412";
 
 /**

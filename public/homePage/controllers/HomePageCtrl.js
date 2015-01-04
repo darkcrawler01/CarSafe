@@ -11,6 +11,39 @@ angular.module('app')
             location.href = "#/speedReduction";
         }
 
+        $scope.reportAlertUser = function(reportType) {
+            var reportText;
+
+            switch (reportType) {
+              case "recklessDriver":
+                reportText = "Reckless driver nearby!";
+                break;
+              case "roadHazard":
+                reportText = "Road hazard nearby!";
+                break;
+              case "heavyTraffic":
+                reportText = "Heavy traffic nearby!";
+                break;
+              default:
+                console.log("something went wrong.. report type not found");
+                break;
+            }
+
+            $alert.show({
+                type: "danger",
+                showIcon: "true",
+                showConfirmationBtn: "true",
+                buttonText: "Thanks",
+                autoCloseInterval: "false",
+                title: "Attention",
+                text: reportText
+            });
+        };
+
+        jQuery(document).on("alertTrigger", function(){
+            $scope.reportAlertUser('recklessDriver');
+        });
+
 
         // var deregisterPositionWatch = $rootScope.$watch('position', function (value, oldvalue) {
         //     if (!value || angular.equals(value, oldvalue)) return;
@@ -56,14 +89,14 @@ angular.module('app')
         //     if (deregisterIdentificationWatch) deregisterIdentificationWatch();
         // });
 
-    // var tmpInterval = setInterval(function(){
-    //     if (parseInt(globalData.split(":")[2].split("}")[0]) <= 10){
-    //         alert("CRASH");
-    //     } else if (parseInt(globalData.split(":")[2].split("}")[0]) <= 25){
-    //         clearInterval(tmpInterval);
-    //         moveToSpeedReduction();
-    //     }
-    // }, 100);
+    var tmpInterval = setInterval(function(){
+        if (parseInt(globalData.split(":")[2].split("}")[0]) <= 10){
+            alert("CRASH");
+        } else if (parseInt(globalData.split(":")[2].split("}")[0]) <= 25){
+            clearInterval(tmpInterval);
+            moveToSpeedReduction();
+        }
+    }, 100);
 
 });    
 

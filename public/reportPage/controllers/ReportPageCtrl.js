@@ -50,11 +50,14 @@ angular.module('app')
         });
     };
 
-    // $scope.getPosition = function(position){
-    //     console.log("pushing alert");
-    //     // drive.notification.messages.set({"data" : position.latitude+","+position.longitude});
+    $scope.getPosition = function(position){
+        console.log("pushing alert");
+
+        socket.emit('warning', JSON.stringify({"ID": uniqueID, "data" : position.latitude+","+position.longitude}));
+        console.error("sent");
+        // drive.notification.messages.set({"data" : position.latitude+","+position.longitude});
         
-    // };
+    };
 
     $scope.logError = function(error){
         console.log(error);
@@ -66,6 +69,10 @@ angular.module('app')
             text: 'Reckless Driver',
             desc: 'Reckless driver nearby.',
             callback: function(){
+                console.error("testing");
+                socket.emit('warning', JSON.stringify({"ID": uniqueID, "data" : "recklessDriver"}));
+                // drive.navigation.position.get().then($scope.getPosition, $scope.logError);
+
                 jQuery.ajax({
                     method:"POST",
                     url:"http://rest.sharethis.com/v1/share/share",
@@ -86,7 +93,7 @@ angular.module('app')
             text: 'Road Hazard',
             desc: 'Road hazard nearby.',
             callback: function(){
-            	drive.navigation.position.get().then($scope.getPosition, $scope.logError);
+            	socket.emit('warning', JSON.stringify({"ID": uniqueID, "data" : "roadHazard"}));
             	$location.path("#/homePage");
             	// $scope.reportAlertUser('roadHazard');
             	$scope.reportThankUser();
@@ -97,12 +104,16 @@ angular.module('app')
             text: 'Heavy Traffic',
             desc: 'Heavy traffic nearby.',
             callback: function(){
-            	drive.navigation.position.get().then($scope.getPosition, $scope.logError);
+            	socket.emit('warning', JSON.stringify({"ID": uniqueID, "data" : "heavyTraffic"}));
             	$location.path("#/homePage");
             	// $scope.reportAlertUser('heavyTraffic');
             	$scope.reportThankUser();
             }
         }
     ];
+
+    jQuery(document).on("alertTrigger", function(){
+        $scope.reportAlertUser('recklessDriver');
+    });
 
 });

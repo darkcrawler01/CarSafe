@@ -6,14 +6,23 @@
 
 function decSetSubscriptions() {
     //*** TODO: Set here subscription to all namespaces you are interested in
-    // drive.vehicleinfo.subscribe(decCallback, logError);
-    // drive.navigation.subscribe(decCallback, logError);
+    drive.vehicleinfo.subscribe(decCallback, logError);
+    drive.navigation.subscribe(decCallback, logError);
     // drive.notification.subscribe(decCallback, logError);
     // drive.identity.users.subscribe(decCallback, logError);
     // drive.commerce.subscribe(decCallback, logError);
     // drive.settings.subscribe(decCallback, logError);
 
-    drive.navigation.pois.subscribe(decCallback, logError);
+    //drive.navigation.pois.subscribe(decCallback, logError);
+
+    socket.on('warning', function(msg){
+        console.error("received" + msg);
+        console.log(msg);
+        msg = JSON.parse(msg);
+        if (uniqueID != msg.ID){
+            jQuery(document).trigger("alertTrigger");
+        }
+      });
 }
 
 function decCallback(decResponse) {

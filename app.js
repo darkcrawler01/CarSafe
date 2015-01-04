@@ -6,12 +6,13 @@ var io = require('socket.io')(http);
 app.use(express.static(__dirname + '/public'));
 
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+  socket.on('warning', function(msg){
+    io.emit('warning', msg);
+    console.error("sent");
   });
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(8080, function(){
+  console.log('listening on *:8080');
 });
 

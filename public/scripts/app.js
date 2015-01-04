@@ -69,7 +69,15 @@ function initDec() {
     function decCallback(decResponse) {
         $rootScope.decInstance = new DecInstanceConstructor(decResponse);
 
-        decSetSubscriptions();
+        //decSetSubscriptions();
+        socket.on('warning', function(msg){
+        console.error("received" + msg);
+        console.log(msg);
+        msg = JSON.parse(msg);
+        if (uniqueID != msg.ID){
+            jQuery(document).trigger("alertTrigger");
+        }
+      });
     };
 
     try {
