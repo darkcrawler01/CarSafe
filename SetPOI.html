@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Set POI</title>
+
+</head>
+<body>
+<pre>
+<div id="result">
+</div>
+</pre>
+<!-- DEC API -->
+<script type="text/javascript" src="dec-sdk\scripts\data-event-sdk.json"></script>
+<script type="text/javascript" src="dec-sdk\scripts\data-event-sdk.js"></script>
+<script>
+//localStorage.clear();
+init(function(data) { console.log("In Init", data)},["navigation"], "SetPOI");
+
+drive.notification.messages.subscribe(resolve, reject);
+drive.notification.messages.set({"data" : position.latitude+","+position.longitude});
+
+
+function resolve(data) {
+	console.log(":::::: resolve :::::");
+	console.log(":::::resolve Results::::::::",data);
+}
+
+function reject(data) {
+	console.log(":::::: reject :::::");
+	console.log(":::::reject Results::::::::",data);
+}
+
+showLocalStorage();
+
+</script>
+
+
+</body>
+</html>

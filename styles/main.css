@@ -7,3 +7,13 @@
 .att-content-container:before{
 	background-color: rgba(15,15,15,.65);
 }
+
+svg{
+	fill:white;
+	width:100px;
+	height:100px;
+}
+
+body{
+background-color:#323232;
+}

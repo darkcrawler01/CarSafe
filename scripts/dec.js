@@ -13,16 +13,16 @@ function decSetSubscriptions() {
     // drive.commerce.subscribe(decCallback, logError);
     // drive.settings.subscribe(decCallback, logError);
 
-    drive.notification.messages.subscribe(decCallback, logError);
+    drive.navigation.pois.subscribe(decCallback, logError);
 }
 
 function decCallback(decResponse) {
-    console.log("something in the callback");
-    console.info("sample-app: Calling back Dec with response: " + JSON.stringify(decResponse));
+    console.log("getting called");
     process(decResponse);
 };
 
 function process(data) {
+    console.log("getting called");
     console.info("sample-app: Process = ", data);
 
     if (data.pois != null) {

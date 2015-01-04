@@ -18,7 +18,14 @@ app.config(function ($routeProvider) {
             templateUrl: 'reportPage/views/reportPage.html',
             controller: 'ReportPageCtrl',
             settings: {
-                viewName: 'Report',
+                viewName: 'Report a Hazard',
+            }
+        })
+        .when('/speedReduction', {
+            templateUrl: 'speedReduction/views/speedReduction.html',
+            controller: 'SpeedReductionCtrl',
+            settings: {
+                viewName: 'Speed Reduction',
             }
         })
         .otherwise({
@@ -97,6 +104,7 @@ app.run(function ($rootScope) {
 
     $rootScope.appLinks = [
         { text: 'Home', desc: 'Home page', href: '#/homePage', selected: true },
-        { text: 'Report', desc: 'Report page', href: '#/reportPage', selected: false }
+        { text: 'Report', desc: 'Report page', href: '#/reportPage', selected: false },
+        { text: 'Speed Reduction', desc: 'Speed Reduction', href: '#/speedReduction', selected: false }
     ];
 });
